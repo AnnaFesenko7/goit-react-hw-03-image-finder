@@ -6,21 +6,21 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default class Searchbar extends Component {
   state = {
-    searchSubject: '',
+    searchQuery: '',
   };
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+    onSubmitClick: PropTypes.func.isRequired,
     children: PropTypes.node,
     'aria-label': PropTypes.string.isRequired,
   };
   handleSubjectChange = event => {
     this.setState({
-      searchSubject: event.currentTarget.value.toLowerCase(),
+      searchQuery: event.currentTarget.value.toLowerCase(),
     });
   };
-  handleSubmit = e => {
-    e.preventDefault();
-    if (this.state.searchSubject.trim() === '') {
+  handleSubmit = event => {
+    event.preventDefault();
+    if (this.state.searchQuery.trim() === '') {
       // alert('Enter what you want to find ');
       toast.error('Enter what you want to find ', {
         position: 'top-right',
@@ -29,19 +29,19 @@ export default class Searchbar extends Component {
         progress: undefined,
       });
     }
-    this.props.onSubmit(this.state.searchSubject);
-    this.setState({ searchSubject: '' });
+    this.props.onSubmitClick(this.state.searchQuery);
+    this.setState({ searchQuery: '' });
   };
   render() {
-    const { children, onSubmit, ...allyProps } = this.props;
+    const { children, onSubmitClick, ...allyProps } = this.props;
     return (
       <div className={s.Searchbar}>
         <form className={s.form__thumb} onSubmit={this.handleSubmit}>
           <input
             className={s.form__input}
             type="text"
-            name="searchSubject"
-            value={this.state.searchSubject}
+            name="searchQuery"
+            value={this.state.searchQuery}
             onChange={this.handleSubjectChange}
             // id="name"
             placeholder="Search images and photos"

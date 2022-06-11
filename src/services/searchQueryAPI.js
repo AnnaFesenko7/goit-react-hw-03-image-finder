@@ -9,6 +9,3 @@ export const fetchQuery = (nextSearchQuery, page) =>
       new Error(`Nothing found on the topic ${nextSearchQuery}`)
     );
   });
-
-// const api = { fetchQuery };
-// export default api;

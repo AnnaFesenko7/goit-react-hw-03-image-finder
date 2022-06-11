@@ -2,15 +2,6 @@
 * Стили компонента Buton (Load more)
 */
 
-.ButtonContainer {
-  width: 100%;
-  margin: 0 auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .Button {
   padding: 8px 16px;
   border-radius: 2px;

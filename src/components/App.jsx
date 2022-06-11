@@ -13,13 +13,13 @@ export default class App extends Component {
     showModal: false,
     activeImgURL: '',
     activeImgAlt: '',
-    searchSubject: '',
+    searchQuery: '',
     page: 1,
   };
 
-  onSearchButton = searchSubject => {
-    console.log('Click on Search');
-    this.setState({ searchSubject });
+  onSearchButton = searchQuery => {
+    console.log('Click on Search', searchQuery);
+    this.setState({ searchQuery });
   };
 
   toggleModal = () => {
@@ -34,20 +34,20 @@ export default class App extends Component {
     });
     this.toggleModal();
   };
-  onLoadMore = () => {
+  onLoadMore = event => {
     console.log('onLoadMore');
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
   render() {
-    const { showModal, searchSubject, page } = this.state;
+    const { showModal, searchQuery, page } = this.state;
     return (
       <div className={s.App}>
-        <Searchbar aria-label="Search" onSubmit={this.onSearchButton}>
+        <Searchbar aria-label="Search" onSubmitClick={this.onSearchButton}>
           <SearchIcon width="20" height="20" />
         </Searchbar>
 
         <ImageGallery
-          searchQuery={searchSubject}
+          searchQuery={searchQuery}
           page={page}
           onGalleryItemClick={this.onGalleryItemClick}
         >
