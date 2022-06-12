@@ -19,15 +19,13 @@ class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { searchQuery, page } = this.props;
     const prevSearchQuery = prevProps.searchQuery;
-
     const nextSearchQuery = searchQuery;
-
     const prevPage = prevProps.page;
-    //
 
     if (prevSearchQuery !== nextSearchQuery) {
       this.setState({ status: 'pending', data: [] });
       this.getNewData(nextSearchQuery, page);
+      return;
     }
     if (prevPage !== page) {
       this.setState({ status: 'pending' });
