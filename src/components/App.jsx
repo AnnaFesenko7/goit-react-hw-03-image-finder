@@ -18,8 +18,8 @@ export default class App extends Component {
   };
 
   onSearchButton = searchQuery => {
-    console.log('Click on Search', searchQuery);
-    this.setState({ searchQuery });
+    // console.log('Click on Search', searchQuery);
+    this.setState({ searchQuery, page: 1 });
   };
 
   toggleModal = () => {
