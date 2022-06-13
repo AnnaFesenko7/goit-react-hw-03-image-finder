@@ -10,6 +10,8 @@ import { ThreeDots } from 'react-loader-spinner';
 class ImageGallery extends Component {
   state = {
     data: [],
+    totalHits: 0,
+    isNextPage: false,
     error: null,
     status: 'idle',
   };
@@ -37,22 +39,32 @@ class ImageGallery extends Component {
     fetchQuery(nextSearchQuery, page)
       .then(searchedData => {
         const newData = searchedData.hits;
+        const newTotalHits = searchedData.totalHits;
         if (newData.length === 0) {
           this.setState({ status: 'rejected' });
           return Promise.reject(
             new Error(`Nothing found on the topic ${nextSearchQuery}`)
           );
         }
-        this.changeState(newData);
+        this.changeState(newData, newTotalHits);
       })
       .catch(error => this.setState({ error }));
   }
 
-  changeState(newData) {
+  changeState(newData, newTotalHits) {
     this.setState(prevState => ({
       data: [...prevState.data, ...newData],
       status: 'resolved',
+      totalHits: newTotalHits,
     }));
+  }
+  hasNextPage() {
+    const { totalHits, page } = this.state;
+    const limit = 12;
+    const totalPage = Math.ceil(totalHits / limit);
+    if (totalPage > page) {
+      this.setState({ isNextPage: true });
+    }
   }
 
   render() {
@@ -98,3 +110,14 @@ class ImageGallery extends Component {
 }
 
 export default ImageGallery;
+
+// function hasNextPage(totalHits, page) {
+//   const limit = 40;
+//   const totalPage = Math.ceil(totalHits / limit);
+//   console.log('totalPage', totalPage, page);
+//   if (totalPage > page) {
+//     refs.loadMoreBtn.classList.remove('is-hidden');
+//   } else {
+//     refs.loadMoreBtn.classList.add('is-hidden');
+//   }
+// }
