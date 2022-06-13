@@ -10,7 +10,7 @@ import { ThreeDots } from 'react-loader-spinner';
 class ImageGallery extends Component {
   state = {
     data: [],
-    totalHits: 0,
+    // totalHits: 0,
     isNextPage: false,
     error: null,
     status: 'idle',
@@ -52,28 +52,22 @@ class ImageGallery extends Component {
       .catch(error => this.setState({ error }));
   }
 
-  changeState(newData, newTotalHits) {
+  changeState(newData) {
     this.setState(prevState => ({
       data: [...prevState.data, ...newData],
       status: 'resolved',
-      totalHits: newTotalHits,
     }));
   }
   hasNextPage(newTotalHits) {
     const { page } = this.props;
-    console.log(newTotalHits);
     const limit = 12;
     const totalPage = Math.ceil(newTotalHits / limit);
-    console.log(
-      '🚀 ~ file: ImageGallery.js ~ line 67 ~ ImageGallery ~ hasNextPage ~ totalPage',
-      totalPage
-    );
+
     if (totalPage > page) {
       this.setState({ isNextPage: true });
     } else {
       this.setState({ isNextPage: false });
     }
-    console.log(this.state.isNextPage);
   }
 
   render() {

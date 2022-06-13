@@ -35,7 +35,6 @@ export default class App extends Component {
     this.toggleModal();
   };
   onLoadMore = event => {
-    console.log('onLoadMore');
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
   render() {
