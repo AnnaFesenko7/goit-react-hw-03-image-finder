@@ -40,6 +40,7 @@ class ImageGallery extends Component {
       .then(searchedData => {
         const newData = searchedData.hits;
         const newTotalHits = searchedData.totalHits;
+        this.hasNextPage(newTotalHits);
         if (newData.length === 0) {
           this.setState({ status: 'rejected' });
           return Promise.reject(
@@ -58,17 +59,25 @@ class ImageGallery extends Component {
       totalHits: newTotalHits,
     }));
   }
-  hasNextPage() {
-    const { totalHits, page } = this.state;
+  hasNextPage(newTotalHits) {
+    const { page } = this.props;
+    console.log(newTotalHits);
     const limit = 12;
-    const totalPage = Math.ceil(totalHits / limit);
+    const totalPage = Math.ceil(newTotalHits / limit);
+    console.log(
+      '🚀 ~ file: ImageGallery.js ~ line 67 ~ ImageGallery ~ hasNextPage ~ totalPage',
+      totalPage
+    );
     if (totalPage > page) {
       this.setState({ isNextPage: true });
+    } else {
+      this.setState({ isNextPage: false });
     }
+    console.log(this.state.isNextPage);
   }
 
   render() {
-    const { data, error, status } = this.state;
+    const { data, error, status, isNextPage } = this.state;
 
     return (
       <>
@@ -99,7 +108,7 @@ class ImageGallery extends Component {
             );
           })}
         </ul>
-        {status === 'resolved' && (
+        {status === 'resolved' && isNextPage === true && (
           <div className={s.ButtonContainer}>{this.props.children}</div>
         )}
 
